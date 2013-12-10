@@ -2,4 +2,4 @@ language: bash
 before_install:
     - source scripts/setup.sh
 script:
-    - ./gradlew -i -s build
+    - bash scripts/build.sh
