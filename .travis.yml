@@ -1,5 +1,5 @@
 language: bash
 before_install:
-    - scripts/setup.sh
+    - soruce scripts/setup.sh
 script:
     - ./gradlew -i -s build
