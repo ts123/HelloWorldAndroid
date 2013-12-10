@@ -1,5 +1,5 @@
-language: java
+language: bash
 before_install:
     - scripts/setup.sh
 script:
-    - ./gradlew build
+    - ./gradlew -i -s build

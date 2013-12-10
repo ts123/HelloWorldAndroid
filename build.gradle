@@ -1,15 +1,49 @@
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
+        maven {
+            url "${System.getenv('HOME')}/Dropbox/Public/maven-repository"
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.6.+'
+        classpath 'com.android.tools.build:gradle:0.6.3+'
+        // classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.+'
+        // classpath 'com.novoda:gradle-android-test-plugin:0.9.3-SNAPSHOT'
+        classpath 'com.squareup.gradle:gradle-android-test-plugin:0.9.1-SNAPSHOT'
+        classpath 'org.gradle.help:gradle-taskdepends-plugin:1.03'
     }
 }
 apply plugin: 'android'
+apply plugin: 'android-test'
+apply plugin: 'taskdepends'
 
+taskdepends {
+    // maxDepth = 20
+    maxLine = 100000
+    showRootTaskNames = ['assemble']
+    // ignoreTaskNames = ['compileJava', 'processResources']
+    // showDetail = true
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+}
 dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
+    testCompile 'junit:junit:4.10'
+    testCompile 'org.robolectric:robolectric:2.1.+'
+    testCompile 'com.squareup:fest-android:1.0.+'
+}
+
+sourceSets {
+    test {
+        java.srcDirs = ['test']
+    }
 }
 
 android {
@@ -25,6 +59,10 @@ android {
             renderscript.srcDirs = ['src']
             res.srcDirs = ['res']
             assets.srcDirs = ['assets']
+        }
+
+        test {
+            java.srcDirs = ['test']
         }
 
         // Move the tests to tests/java, tests/res, etc...
