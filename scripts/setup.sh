@@ -1,5 +1,10 @@
 #!/bin/bash
-if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq libstdc++6:i386 lib32z1; fi
+if [ `uname -m` = x86_64 ]; then
+    if command -v apt-get >/dev/null; then
+        sudo apt-get update -qq
+        sudo apt-get install -qq libstdc++6:i386 lib32z1
+    fi
+fi
 wget http://dl.google.com/android/android-sdk_r22.3-linux.tgz
 tar -zxf android-sdk_r22.3-linux.tgz
 export ANDROID_HOME=$PWD/android-sdk-linux
